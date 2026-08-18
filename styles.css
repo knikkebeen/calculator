@@ -26,9 +26,7 @@ body {
 
 #container button {
     font-size: 28px;
-    height: 100px;
-    width: 100px;
-    flex: 1 0 150px;
+    flex: 1 1 150px;
 }
 
 #container #display {
@@ -37,7 +35,5 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 28px;
-    height: 100px;
-    width: 790px;
-    flex: 1 0 auto;
+    flex: 1 1 790px;
 }
