@@ -39,7 +39,7 @@ const buttons = document.querySelectorAll("button");
 let numOne = '';
 let operator = '';
 let numTwo = '';
-let result = `this can't be an empty string lol`;
+let result = ``;
 
 buttons.forEach((bttn) => {
     bttn.addEventListener("click", (e) => {
@@ -61,8 +61,9 @@ buttons.forEach((bttn) => {
         ) {
             result = operate(operator, numOne, numTwo);
             display.textContent = result;
-            numOne = result;
+            numOne = result.toString();
             numTwo = '';
+            console.log(numOne);
 
             // If enter was pressed, the operator is cleared so it can be used again.
             // If an operator was pressed, it's stored for the next operation.
@@ -76,7 +77,7 @@ buttons.forEach((bttn) => {
         if (bttn.className == 'num' && operator == '') {
             numOne += e.target.textContent;
             display.textContent = numOne;
-        } else if (bttn.className == 'opp' && operator == '') {
+        } else if (bttn.className == 'opp' && operator == '' && numOne !== '') {
             operator += e.target.textContent;
             display.textContent = operator;
         } else if (bttn.className == 'num' && operator != '') {
