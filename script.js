@@ -15,8 +15,10 @@ function divide(a, b) {
 };
 
 function operate(operator, numOne, numTwo) {
+    // Convert to numbers so '+' doesn't concatenate.
     numOne = +numOne;
     numTwo = +numTwo;
+
     if (operator == '+') {
         return add(numOne, numTwo);
     } else if (operator == '-') {
@@ -26,29 +28,49 @@ function operate(operator, numOne, numTwo) {
     } else if (operator == '/') {
         return divide(numOne, numTwo);
     } else {
-        return 'error not a valid operator'
+        return 'error not a valid operator'; //not necessary anymore
     };
 };
-
-let numOne = '';
-let operator = '';
-let numTwo = '';
 
 const container = document.querySelector("#container");
 const display = document.querySelector("#display");
 const buttons = document.querySelectorAll("button");
 
+let numOne = '';
+let operator = '';
+let numTwo = '';
+let result = `this can't be an empty string lol`;
+
 buttons.forEach((bttn) => {
     bttn.addEventListener("click", (e) => {
-        if (bttn.className == 'clear') {
+        // Clears the calculator if 'clear' is pressed 
+        // OR a result is displayed and a digit is pressed before an operator.
+        if (bttn.className == 'clear'
+            || (display.textContent == result && e.target.className == 'num' && operator == '')
+        ) {
             numOne = '';
             operator = '';
             numTwo = '';
-            display.textContent = '[cleared, please enter a new operation]';
+            display.textContent = '';
         };
 
-        if (bttn.className == 'enter') {
-            display.textContent = operate(operator, numOne, numTwo);
+        // If enter is pressed we want the result but NOT before all numbers and the operator is selected.
+        // Same goes for pressing an operator *after* all variables are given.
+        if (((bttn.className == 'enter') && ((numOne != '') && (numTwo != '') && (operator != ''))) 
+            || ((bttn.className == 'opp') && ((numOne != '') && (numTwo != '') && (operator != '')))
+        ) {
+            result = operate(operator, numOne, numTwo);
+            display.textContent = result;
+            numOne = result;
+            numTwo = '';
+
+            // If enter was pressed, the operator is cleared so it can be used again.
+            // If an operator was pressed, it's stored for the next operation.
+            if (e.target.className == 'enter') {
+                operator = '';
+            } else {
+                operator = e.target.textContent;
+            }
         };
 
         if (bttn.className == 'num' && operator == '') {
@@ -57,8 +79,7 @@ buttons.forEach((bttn) => {
         } else if (bttn.className == 'opp' && operator == '') {
             operator += e.target.textContent;
             display.textContent = operator;
-            passover = true;
-        } else if (bttn.className == 'num' && operator != true) {
+        } else if (bttn.className == 'num' && operator != '') {
             numTwo += e.target.textContent;
             display.textContent = numTwo;
         };
