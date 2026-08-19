@@ -39,19 +39,20 @@ const buttons = document.querySelectorAll("button");
 let numOne = '';
 let operator = '';
 let numTwo = '';
-let result = ``;
+let resultDisplayed = false;
 
 buttons.forEach((bttn) => {
     bttn.addEventListener("click", (e) => {
         // Clears the calculator if 'clear' is pressed 
         // OR a result is displayed and a digit is pressed before an operator.
         if (bttn.className == 'clear'
-            || (display.textContent == result && e.target.className == 'num' && operator == '')
+            || (resultDisplayed === true && e.target.className == 'num' && operator == '')
         ) {
             numOne = '';
             operator = '';
             numTwo = '';
             display.textContent = '';
+            resultDisplayed = false;
         };
 
         // If enter is pressed we want the result but NOT before all numbers and the operator is selected.
@@ -59,11 +60,10 @@ buttons.forEach((bttn) => {
         if (((bttn.className == 'enter') && ((numOne != '') && (numTwo != '') && (operator != ''))) 
             || ((bttn.className == 'opp') && ((numOne != '') && (numTwo != '') && (operator != '')))
         ) {
-            result = operate(operator, numOne, numTwo);
-            display.textContent = result;
-            numOne = result.toString();
+            numOne = operate(operator, numOne, numTwo).toString();
+            display.textContent = numOne;
             numTwo = '';
-            console.log(numOne);
+            resultDisplayed = true;
 
             // If enter was pressed, the operator is cleared so it can be used again.
             // If an operator was pressed, it's stored for the next operation.
@@ -77,9 +77,9 @@ buttons.forEach((bttn) => {
         if (bttn.className == 'num' && operator == '') {
             numOne += e.target.textContent;
             display.textContent = numOne;
-        } else if (bttn.className == 'opp' && operator == '' && numOne !== '') {
+        } else if (bttn.className == 'opp' && operator == '' && numOne != '') {
             operator += e.target.textContent;
-            display.textContent = operator;
+            resultDisplayed = false;
         } else if (bttn.className == 'num' && operator != '') {
             numTwo += e.target.textContent;
             display.textContent = numTwo;
