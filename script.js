@@ -78,13 +78,25 @@ buttons.forEach((bttn) => {
             if (e.target.textContent == '.' && numOne.includes('.')) {
                 return;
             };
+            if (e.target.textContent == '.' && numOne == '') {
+                numOne += '0.'
+                display.textContent = numOne;
+                return;
+            };
             numOne += e.target.textContent;
             display.textContent = numOne;
+
         } else if (bttn.className == 'opp' && numOne != '') {
             operator = e.target.textContent;
             resultDisplayed = false;
+            
         } else if (bttn.className == 'num' && operator != '') {
             if (e.target.textContent == '.' && numTwo.includes('.')) {
+                return;
+            };
+            if (e.target.textContent == '.' && numTwo == '') {
+                numTwo += '0.'
+                display.textContent = numTwo;
                 return;
             };
             numTwo += e.target.textContent;
