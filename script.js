@@ -26,6 +26,9 @@ function operate(operator, numOne, numTwo) {
     } else if (operator == '*') {
         return multiply(numOne, numTwo);
     } else if (operator == '/') {
+        if (numTwo == 0) {
+            return "NaN";
+        };
         return divide(numOne, numTwo);
     } else {
         return 'error not a valid operator'; //not necessary anymore
@@ -89,7 +92,7 @@ buttons.forEach((bttn) => {
         } else if (bttn.className == 'opp' && numOne != '') {
             operator = e.target.textContent;
             resultDisplayed = false;
-            
+
         } else if (bttn.className == 'num' && operator != '') {
             if (e.target.textContent == '.' && numTwo.includes('.')) {
                 return;
