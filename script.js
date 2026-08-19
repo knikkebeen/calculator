@@ -75,16 +75,21 @@ buttons.forEach((bttn) => {
         };
 
         if (bttn.className == 'num' && operator == '') {
+            if (e.target.textContent == '.' && numOne.includes('.')) {
+                return;
+            };
             numOne += e.target.textContent;
             display.textContent = numOne;
         } else if (bttn.className == 'opp' && numOne != '') {
             operator = e.target.textContent;
             resultDisplayed = false;
         } else if (bttn.className == 'num' && operator != '') {
+            if (e.target.textContent == '.' && numTwo.includes('.')) {
+                return;
+            };
             numTwo += e.target.textContent;
             display.textContent = numTwo;
         };
-
     });
 });
 
