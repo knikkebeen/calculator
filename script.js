@@ -77,8 +77,8 @@ buttons.forEach((bttn) => {
         if (bttn.className == 'num' && operator == '') {
             numOne += e.target.textContent;
             display.textContent = numOne;
-        } else if (bttn.className == 'opp' && operator == '' && numOne != '') {
-            operator += e.target.textContent;
+        } else if (bttn.className == 'opp' && numOne != '') {
+            operator = e.target.textContent;
             resultDisplayed = false;
         } else if (bttn.className == 'num' && operator != '') {
             numTwo += e.target.textContent;
@@ -87,5 +87,4 @@ buttons.forEach((bttn) => {
 
     });
 });
-
 
