@@ -31,7 +31,7 @@ function operate(operator, numOne, numTwo) {
         };
         return divide(numOne, numTwo);
     } else {
-        return 'error not a valid operator'; //not necessary anymore
+        return 'error not a valid operator';
     };
 };
 
@@ -46,20 +46,36 @@ let resultDisplayed = false;
 
 buttons.forEach((bttn) => {
     bttn.addEventListener("click", (e) => {
-        // Clears the calculator if 'clear' is pressed 
-        // OR a result is displayed and a digit is pressed before an operator.
+
+        if (bttn.className == 'backspace') {
+            if (resultDisplayed === true) {
+                return;
+            } else if (numOne != '' && operator == '' && numTwo == '') {
+                numOne = numOne.split("");
+                numOne.pop();
+                numOne = numOne.join("");
+                display.textContent = numOne;
+            } else if (numOne != '' && operator != '' && numTwo != '') {
+                numTwo = numTwo.split("");
+                numTwo.pop();
+                numTwo = numTwo.join("");
+                display.textContent = numTwo;
+            }
+        };
+
+        // Begin a new operation when a result is displayed and a digit is pressed before an operator.
+        // Or clear is pressed
         if (bttn.className == 'clear'
             || (resultDisplayed === true && e.target.className == 'num' && operator == '')
         ) {
             numOne = '';
             operator = '';
             numTwo = '';
-            display.textContent = '';
+            display.textContent = '[enter your operation]';
             resultDisplayed = false;
         };
 
-        // If enter is pressed we want the result but NOT before all numbers and the operator is selected.
-        // Same goes for pressing an operator *after* all variables are given.
+        // Calculates the result if enter is pressed OR an operator is pressed *after* all variables are given.
         if (((bttn.className == 'enter') && ((numOne != '') && (numTwo != '') && (operator != ''))) 
             || ((bttn.className == 'opp') && ((numOne != '') && (numTwo != '') && (operator != '')))
         ) {
@@ -77,6 +93,7 @@ buttons.forEach((bttn) => {
             }
         };
 
+        // idk this one's a mess
         if (bttn.className == 'num' && operator == '') {
             if (e.target.textContent == '.' && numOne.includes('.')) {
                 return;
@@ -91,6 +108,7 @@ buttons.forEach((bttn) => {
 
         } else if (bttn.className == 'opp' && numOne != '') {
             operator = e.target.textContent;
+            // cba to explain this one it just needs to be set to false here or entering a new number will reset everything.
             resultDisplayed = false;
 
         } else if (bttn.className == 'num' && operator != '') {
