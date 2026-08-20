@@ -27,7 +27,7 @@ function operate(operator, numOne, numTwo) {
         return multiply(numOne, numTwo);
     } else if (operator == '/') {
         if (numTwo == 0) {
-            return "NaN";
+            return "that's a lot of zero's!";
         };
         return divide(numOne, numTwo);
     } else {
@@ -54,12 +54,20 @@ buttons.forEach((bttn) => {
                 numOne = numOne.split("");
                 numOne.pop();
                 numOne = numOne.join("");
-                display.textContent = numOne;
+                if (numOne == '') {
+                    display.textContent = '0';
+                } else {
+                    display.textContent = numOne;
+                };
             } else if (numOne != '' && operator != '' && numTwo != '') {
                 numTwo = numTwo.split("");
                 numTwo.pop();
                 numTwo = numTwo.join("");
-                display.textContent = numTwo;
+                if (numTwo == '') {
+                    display.textContent = '0';
+                } else {
+                    display.textContent = numTwo;
+                };
             }
         };
 
@@ -91,6 +99,13 @@ buttons.forEach((bttn) => {
             } else {
                 operator = e.target.textContent;
             }
+
+            if (numOne === `that's a lot of zero's!`) {
+                numOne = '';
+                operator = '';
+                numTwo = '';
+                resultDisplayed = false;
+            };
         };
 
         // idk this one's a mess
@@ -125,4 +140,3 @@ buttons.forEach((bttn) => {
         };
     });
 });
-

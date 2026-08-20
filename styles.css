@@ -25,15 +25,18 @@ body {
 }
 
 #container button {
+    background-color: bisque;
     font-size: 28px;
     flex: 1 1 150px;
 }
 
 #container #display {
     background-color: rgb(102, 179, 179);
+    border-bottom: 5px solid;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 28px;
-    flex: 1 1 790px;
+    flex: 1 0 790px;
+    min-height: 38px;
 }
